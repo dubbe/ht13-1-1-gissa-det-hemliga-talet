@@ -4,13 +4,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/bootstrap")
+    @Styles.Render("~/Content/Site.css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    @RenderBody()
+    <div class="container">
+        <div class="header">
+            <h3 class="text-muted">Guess the secret number</h3>
+        </div>
+        @RenderBody()
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>

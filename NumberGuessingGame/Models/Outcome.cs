@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NumberGuessingGame.Models
 {
-    enum Outcome
+    public enum Outcome
     {
         Indefinite, 
         Low,

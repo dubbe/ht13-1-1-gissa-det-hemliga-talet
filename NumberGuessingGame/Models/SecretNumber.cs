@@ -17,7 +17,14 @@ namespace NumberGuessingGame.Models
         {
             get
             {
-                return true;
+                if (_guessedNumbers.Count() == MaxNumberOfGuesses)
+                {
+                    return true;
+                }
+                else 
+                {
+                    return false;
+                }
             }
         }
 
@@ -33,7 +40,7 @@ namespace NumberGuessingGame.Models
         {
             get
             {
-                return _guessedNumbers.AsReadOnly();
+                return this._guessedNumbers.AsReadOnly();
             } 
         }
 
@@ -41,7 +48,7 @@ namespace NumberGuessingGame.Models
         {
             get
             {
-                return _lastGuessedNumber;
+                return this._lastGuessedNumber;
             }
         }
 
@@ -82,31 +89,48 @@ namespace NumberGuessingGame.Models
 
         public Outcome MakeGuess(int guess)
         {
+
+            var guessedNumber = new GuessedNumber();
+            guessedNumber.Number = guess;
+
             // Check if guess is in between 1 and 100
             if (guess < 1 && guess > 100)
             {
                 throw new System.ArgumentOutOfRangeException();
             }
 
-            // Here i AM!
-            // Figure out how to find in a list with structs, don't wanna loop them through each time... Boring
-            if (_guessedNumbers.Find(guess))
+            // Do I have any more guesses?
+            if (CanMakeGuess)
             {
+                return Outcome.NoMoreGuesses;
+            }
 
+            // Check if this guess is allready done
+            var sameGuess = _guessedNumbers.Where(x => x.Number == guess);
+            if (sameGuess.Count() > 0)
+            {
+                return Outcome.OldGuess;
             }
             
+            // So what is our guess?
             if (guess == _number)
             {
-                return Outcome.Right;
+                guessedNumber.Outcome = Outcome.Right;
             } 
             else if (guess > _number) 
             {
-                return Outcome.High;
+                guessedNumber.Outcome = Outcome.High;
             }
-            else if (guess < _number) 
+            else
             {
-                return Outcome.Low;
+                guessedNumber.Outcome = Outcome.Low;
             }
+
+            // Add this guess to list
+            _guessedNumbers.Add(guessedNumber);
+
+            // Return outcome
+            return guessedNumber.Outcome;
             
         }
     }

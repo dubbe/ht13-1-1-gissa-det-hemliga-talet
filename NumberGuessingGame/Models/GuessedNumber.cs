@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NumberGuessingGame.Models
 {
-    struct GuessedNumber
+    public struct GuessedNumber
     {
         public int? Number;
         public Outcome Outcome;

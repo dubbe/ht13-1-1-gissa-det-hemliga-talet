@@ -1,0 +1,41 @@
+﻿@model NumberGuessingGame.ViewModels.GuessViewModel
+
+@{
+    ViewBag.Title = "Guess";
+}
+
+@if (ViewData.ModelState.IsValid == false)
+{
+    <div class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Error:</strong> 
+        @foreach (var modelState in ViewData.ModelState.Values)
+        {
+            foreach (var error in modelState.Errors)
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        }
+    </div>
+}
+
+<div class="jumbotron">
+    <h2>Make your first guess</h2>
+    <p>Show guesses here?</p>
+    
+
+        @using (Html.BeginForm("Guess", "SecretNumber", FormMethod.Post, new { @class = "guess" }))
+    {
+
+        <div class="input-group">
+
+            @Html.TextBoxFor(m => m.Guess, null, new { @class = "form-control input-lg" })
+            <span class="input-group-btn ">
+                <button class="btn btn-lg btn-success" type="submit">Guess!</button>
+            </span>
+
+        </div><!-- /input-group -->
+    }
+
+
+</div>
