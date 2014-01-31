@@ -9,3 +9,13 @@
     width: 200px;
     margin: 0 auto;
 }
+
+.guesses {
+    margin: 5px !important;
+    padding: 5px !important;
+}
+
+.has-error .form-control {
+    border: 1px solid #cccccc;
+    background-color: #ffe7e7; 
+}

@@ -17,13 +17,17 @@ namespace NumberGuessingGame.Models
         {
             get
             {
-                if (_guessedNumbers.Count() == MaxNumberOfGuesses)
+                if (this.Count == MaxNumberOfGuesses)
                 {
-                    return true;
+                    return false;
+                }
+                else if (this.LastGuessedNumber.Outcome == Outcome.Right)
+                {
+                    return false;
                 }
                 else 
                 {
-                    return false;
+                    return true;
                 }
             }
         }
@@ -32,7 +36,14 @@ namespace NumberGuessingGame.Models
         {
             get
             {
-                return _guessedNumbers.Count;
+                if (this._guessedNumbers != null)
+                {
+                    return this._guessedNumbers.Count;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
 
@@ -70,17 +81,17 @@ namespace NumberGuessingGame.Models
         }
         public SecretNumber()
         {
-            throw new System.NotImplementedException();
+            this.Initialize();
         }
 
         public void Initialize()
         {
-            // clear previously guessedNumbers
-            _guessedNumbers.Clear();
-
             // Generate a random number between 1-100
             Random rnd = new Random();
             _number = rnd.Next(100) + 1;
+
+            // clear previously guessedNumbers and initialize list
+            this._guessedNumbers = new List<GuessedNumber>();
 
         }
         
@@ -94,23 +105,25 @@ namespace NumberGuessingGame.Models
             guessedNumber.Number = guess;
 
             // Check if guess is in between 1 and 100
-            if (guess < 1 && guess > 100)
+            if (guess < 1 || guess > 100)
             {
                 throw new System.ArgumentOutOfRangeException();
             }
 
             // Do I have any more guesses?
-            if (CanMakeGuess)
+            if (!this.CanMakeGuess)
             {
                 return Outcome.NoMoreGuesses;
             }
 
             // Check if this guess is allready done
-            var sameGuess = _guessedNumbers.Where(x => x.Number == guess);
-            if (sameGuess.Count() > 0)
+            var sameGuess = this._guessedNumbers.Where(x => x.Number == guess);
+            var count = sameGuess.Count();
+            if (count > 0)
             {
                 return Outcome.OldGuess;
             }
+
             
             // So what is our guess?
             if (guess == _number)
@@ -121,13 +134,18 @@ namespace NumberGuessingGame.Models
             {
                 guessedNumber.Outcome = Outcome.High;
             }
-            else
+            else if (guess < _number)
             {
                 guessedNumber.Outcome = Outcome.Low;
             }
+            else
+            {
+                guessedNumber.Outcome = Outcome.Indefinite;
+            }
 
             // Add this guess to list
-            _guessedNumbers.Add(guessedNumber);
+            this._guessedNumbers.Add(guessedNumber);
+            this._lastGuessedNumber = guessedNumber;
 
             // Return outcome
             return guessedNumber.Outcome;

@@ -1,0 +1,14 @@
+﻿@model MvcFlash.Core.Messages.SimpleMessage
+
+<div class="alert alert-@Model.MessageType">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <strong>@Model.Title!</strong> @Model.Content
+    <ul>
+        @if (Model.Data != null)
+        {
+           foreach (var data in Model.Data as List<string>) {
+               <li>@data.ToString()</li>
+           }
+        }
+    </ul>
+</div>

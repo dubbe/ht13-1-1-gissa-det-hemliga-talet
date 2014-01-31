@@ -1,12 +1,16 @@
 ﻿@model NumberGuessingGame.Models.SecretNumber
+@using MvcFlash.Core.Extensions;
 
 @{
     ViewBag.Title = "Index";
 }
+
+<div>
+    @Html.Flash()
+</div>
 
 <div class="jumbotron">
     <h1>Welcome</h1>
     <p class="lead">Begin... Rules and stuff</p>
     <p><a class="btn btn-lg btn-success" href="/SecretNumber/Game" role="button">Begin game!</a></p>
 </div>
-

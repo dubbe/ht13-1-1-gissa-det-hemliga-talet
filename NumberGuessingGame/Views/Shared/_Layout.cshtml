@@ -17,7 +17,22 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    <script>
+    $.validator.setDefaults({
+        highlight: function (element, errorClass, validClass) {
+            $(element).closest(".input-group").addClass("has-error").find(".btn:first").attr("disabled", "disabled")
+            console.log($(element).closest(".input-group").first(".btn"))
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            console.log("unhighlight")
+            $(element).closest(".input-group")
+            .removeClass("has-error").find(".btn:first").removeAttr("disabled");
+           
+        }
+    });
+    </script>
 </body>
 </html>
