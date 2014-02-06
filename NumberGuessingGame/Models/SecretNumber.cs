@@ -11,7 +11,7 @@ namespace NumberGuessingGame.Models
         private GuessedNumber _lastGuessedNumber;
         private int? _number;
 
-        const int MaxNumberOfGuesses = 7;
+        public const int MaxNumberOfGuesses = 7;
 
         public bool CanMakeGuess 
         {
@@ -90,8 +90,12 @@ namespace NumberGuessingGame.Models
             Random rnd = new Random();
             _number = rnd.Next(100) + 1;
 
-            // clear previously guessedNumbers and initialize list
-            this._guessedNumbers = new List<GuessedNumber>();
+            // clear previously guessedNumbers and initialize list with capacaty of MaxNumbersOfGuesses
+            this._guessedNumbers = new List<GuessedNumber>(MaxNumberOfGuesses);
+
+            // Reset lastGuessedNumber
+            this._lastGuessedNumber.Number = null;
+            this._lastGuessedNumber.Outcome = Outcome.Indefinite;
 
         }
         
